@@ -1,16 +1,15 @@
 class Graph{
 
     constructor(startX, startY, sizeX, sizeY){
-        this.margin = 75;
+        this.margin = 50;
         this.canvasStart = {x:startX,y:startY};
         this.canvasDim = {x:sizeX, y:sizeY};
         this.graphStart = {x:startX+this.margin,y:startY+this.margin};
         this.graphDim = {x:sizeX-(2*this.margin),y:sizeY-(2*this.margin)};
         this.axes = new Axes();
-        this.axes.margin = this.margin;
         this.backColour = 0;
         this.colour = 255;
-        this.dataRange = {x:{min:Infinity,max:-Infinity},y:{min:Infinity,max:-Infinity}};
+        this.dataRange = {x:{min:Infinity,max:-Infinity,range:0},y:{min:Infinity,max:-Infinity,range:0}};
     }
 
     addData(data){
@@ -22,6 +21,19 @@ class Graph{
         this.dataRange.x.min = min(x,this.dataRange.x.min);
         this.dataRange.y.max = max(y,this.dataRange.y.max);
         this.dataRange.y.min = min(y,this.dataRange.y.min);
+    }
+
+    initialiseRange(){
+        this.dataRange.x.range = this.dataRange.x.max-this.dataRange.x.min;
+        this.dataRange.y.range = this.dataRange.y.max-this.dataRange.y.min;
+        let xMargin = this.dataRange.x.range*0.1;
+        let yMargin = this.dataRange.y.range*0.1;
+        this.dataRange.x.max += xMargin;
+        this.dataRange.x.min -= xMargin;
+        this.dataRange.y.max += yMargin;
+        this.dataRange.y.min -= yMargin;
+        this.dataRange.x.range = this.dataRange.x.max-this.dataRange.x.min;
+        this.dataRange.y.range = this.dataRange.y.max-this.dataRange.y.min;
     }
 
     setXRange(min, max){
@@ -41,7 +53,7 @@ class Graph{
             this.canvasStart.y, 
             this.canvasDim.x, 
             this.canvasDim.y);
-        this.axes.show(this.canvasStart, this.canvasDim);
+        this.axes.show(this.graphStart, this.graphDim);
     }
 
     mapOntoX(input){

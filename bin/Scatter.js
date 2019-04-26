@@ -16,6 +16,7 @@ class Scatter extends Graph{
             this.dataPoints.push(new DataPoint(data.x[i], data.y[i]));
         }
         this.axes.setDataRange(this.dataRange);
+        this.initialiseRange()
     }
 
     show(){

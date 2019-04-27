@@ -57,6 +57,9 @@ class Graph{
             this.canvasStart.y, 
             this.canvasDim.x, 
             this.canvasDim.y);
+    }
+
+    showAxes(){
         this.axes.show(this.graphStart, this.graphDim);
     }
 

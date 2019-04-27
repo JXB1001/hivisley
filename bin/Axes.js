@@ -11,11 +11,13 @@ class Axes{
 
     setDataRange(datarange){
         this.dataRange = datarange;
+        
     }
     
     show(startPos, dim){
         stroke(this.colour);
         strokeWeight(this.weight);
+        this.modifyIncrements(dim);
         this.xPosForYline = startPos.x;
         this.yPosForXline = startPos.y+dim.y;
         this.showAxes(startPos, dim);
@@ -61,6 +63,24 @@ class Axes{
             fill(this.colour);
             text(i, this.xPosForYline-this.textMargin,position);
             position -= inc*this.yIncrement;
+        }
+    }
+
+    modifyIncrements(dim){
+        while( (dim.y/(this.dataRange.y.range))*this.yIncrement < dim.y/15){
+            this.yIncrement += 1;
+        }
+
+        while( (dim.x/(this.dataRange.x.range))*this.xIncrement < dim.x/15){
+            this.xIncrement += 1;
+        }
+
+        while( (dim.y/(this.dataRange.y.range))*this.yIncrement > dim.y/3){
+            this.yIncrement /= 2;
+        }
+
+        while( (dim.x/(this.dataRange.x.range))*this.xIncrement > dim.x/4){
+            this.xIncrement /= 2;
         }
     }
 }

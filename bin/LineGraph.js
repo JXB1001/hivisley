@@ -5,7 +5,7 @@ class LineGraph extends Graph{
         this.lines = []
         this.weight = 3;
         this.style = (style == undefined) ? "STRAIGHT" : style;
-        this.curveFactor = 75;
+        this.curveFactor = 30;
     }
 
     addData(data){
@@ -35,62 +35,15 @@ class LineGraph extends Graph{
     }
 
     show(){
-        super.show();
+        super.show();   
         stroke(this.colour);
         strokeWeight(this.weight)
         noFill();
-        let tempGraph = this;
+        let refGraph = this;
         this.lines.forEach(function(l){
-            beginShape();
-            let count = 0;
-            let tempLine = l;
-            let prevX = undefined;
-            let prevY = undefined;
-            let curveA = 0;
-            let curveB = 0;
-            for(var i = 0; i < l.dataPoints.length; i++){
-                let dp = l.dataPoints[i];
-                if(tempGraph.isInRange(dp)){
-
-                    let xPos = tempGraph.mapOntoX(dp.x);
-                    let yPos = tempGraph.mapOntoY(dp.y)
-
-                    switch(tempGraph.style){
-                        case "STRAIGHT":
-                            vertex(xPos, yPos);
-                            break;
-                        case "CURVED":
-                            switch(i){
-                                case 1:
-                                    curveA = 0;
-                                    curveB = tempGraph.curveFactor;
-                                    break;
-                                case (l.dataPoints.length-1):
-                                    curveA = tempGraph.curveFactor;
-                                    curveB = 0;
-                                    break;
-                                default:
-                                    curveA = tempGraph.curveFactor;
-                                    curveB = tempGraph.curveFactor;           
-                                    break
-                            }
-                            if(i != 0){
-                                bezierVertex(prevX+curveA, prevY, xPos-curveB, yPos, xPos, yPos);
-                            }
-                            if((i == 0)||(i == tempLine.dataPoints.length-1)){
-                                vertex(xPos, yPos);
-                            }
-                            break;
-                    }
-                    prevX = xPos;
-                    prevY = yPos;
-                }
-                else{
-                    console.log("Datapoint Out of Scope");
-                }
-            }
-            endShape();
+            l.show(refGraph)
         });
+        super.showAxes();
     }
 
     setStyle(style){

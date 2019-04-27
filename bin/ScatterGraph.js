@@ -13,7 +13,7 @@ class ScatterGraph extends Graph{
 
         for(var i = 0; i < data.x.length; i++){
             this.addDataPoint(data.x[i], data.y[i]);
-            this.dataPoints.push(new DataPoint(data.x[i], data.y[i]));
+            this.dataPoints.push(new DataPoint(data.x[i], data.y[i], this));
         }
         this.axes.setDataRange(this.dataRange);
         this.initialiseRange(false)
@@ -22,16 +22,9 @@ class ScatterGraph extends Graph{
     show(){
         super.show();
         fill(this.colour);
-        var tempGraph = this;
+        var graphRef = this;
         this.dataPoints.forEach(function(dp){
-            if(tempGraph.isInRange(dp)){
-                let xPos = tempGraph.mapOntoX(dp.x);
-                let yPos = tempGraph.mapOntoY(dp.y)
-                circle(xPos, yPos, 10);
-            }
-            else{
-                console.log("Datapoint Out of Scope");
-            }
+            dp.show(graphRef);
         });
     }
 }

@@ -6,7 +6,7 @@ class Axes{
         this.incSize = 10;
         this.textMargin = this.incSize*3;
         this.xIncrement = 1;
-        this.yIncrement = 2;
+        this.yIncrement = 1;
     }
 
     setDataRange(datarange){

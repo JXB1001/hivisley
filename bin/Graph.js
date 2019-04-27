@@ -23,27 +23,31 @@ class Graph{
         this.dataRange.y.min = min(y,this.dataRange.y.min);
     }
 
-    initialiseRange(){
+    initialiseRange(AddMargin){
         this.dataRange.x.range = this.dataRange.x.max-this.dataRange.x.min;
         this.dataRange.y.range = this.dataRange.y.max-this.dataRange.y.min;
-        let xMargin = this.dataRange.x.range*0.1;
-        let yMargin = this.dataRange.y.range*0.1;
-        this.dataRange.x.max += xMargin;
-        this.dataRange.x.min -= xMargin;
-        this.dataRange.y.max += yMargin;
-        this.dataRange.y.min -= yMargin;
-        this.dataRange.x.range = this.dataRange.x.max-this.dataRange.x.min;
-        this.dataRange.y.range = this.dataRange.y.max-this.dataRange.y.min;
+        if(AddMargin){
+            let xMargin = this.dataRange.x.range*0.1;
+            let yMargin = this.dataRange.y.range*0.1;
+            this.dataRange.x.max += xMargin;
+            this.dataRange.x.min -= xMargin;
+            this.dataRange.y.max += yMargin;
+            this.dataRange.y.min -= yMargin;
+            this.dataRange.x.range = this.dataRange.x.max-this.dataRange.x.min;
+            this.dataRange.y.range = this.dataRange.y.max-this.dataRange.y.min;
+        }
     }
 
     setXRange(min, max){
         this.dataRange.x.min = min;
         this.dataRange.x.max = max;
+        this.dataRange.x.range = max-min;
     }
 
     setYRange(min, max){
         this.dataRange.y.min = min;
         this.dataRange.y.max = max;
+        this.dataRange.y.range = max-min;
     }
 
     show(){
@@ -70,6 +74,16 @@ class Graph{
         let normalised = (input-oldMin)/(oldMax-oldMin);
         let result = normalised*(newMax-newMin);
         return result;
+    }
+
+    isInRange(dp){
+        if((dp.x <= this.dataRange.x.max) 
+        && (dp.x >= this.dataRange.x.min)
+        && (dp.y <= this.dataRange.y.max)
+        && (dp.y >= this.dataRange.y.min)){
+            return true;
+        }
+        return false;
     }
 
     setColour(colour){

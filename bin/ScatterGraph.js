@@ -1,4 +1,4 @@
-class Scatter extends Graph{
+class ScatterGraph extends Graph{
 
     constructor(x, y, xw, yw){
         super(x, y, xw, yw);
@@ -16,7 +16,7 @@ class Scatter extends Graph{
             this.dataPoints.push(new DataPoint(data.x[i], data.y[i]));
         }
         this.axes.setDataRange(this.dataRange);
-        this.initialiseRange()
+        this.initialiseRange(false)
     }
 
     show(){
@@ -24,10 +24,7 @@ class Scatter extends Graph{
         fill(this.colour);
         var tempGraph = this;
         this.dataPoints.forEach(function(dp){
-            if((dp.x <= tempGraph.dataRange.x.max) 
-            && (dp.x >= tempGraph.dataRange.x.min)
-            && (dp.y <= tempGraph.dataRange.y.max)
-            && (dp.y >= tempGraph.dataRange.y.min)){
+            if(tempGraph.isInRange(dp)){
                 let xPos = tempGraph.mapOntoX(dp.x);
                 let yPos = tempGraph.mapOntoY(dp.y)
                 circle(xPos, yPos, 10);

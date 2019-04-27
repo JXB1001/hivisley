@@ -23,19 +23,23 @@ class Graph{
         this.dataRange.y.min = min(y,this.dataRange.y.min);
     }
 
-    initialiseRange(AddMargin){
+    initialiseRange(AddMarginX, AddMarginY){
+        AddMarginY = (AddMarginY == undefined) ? AddMarginX : false;
         this.dataRange.x.range = this.dataRange.x.max-this.dataRange.x.min;
         this.dataRange.y.range = this.dataRange.y.max-this.dataRange.y.min;
-        if(AddMargin){
+        if(AddMarginX){
             let xMargin = this.dataRange.x.range*0.1;
-            let yMargin = this.dataRange.y.range*0.1;
             this.dataRange.x.max += xMargin;
             this.dataRange.x.min -= xMargin;
+            this.dataRange.x.range = this.dataRange.x.max-this.dataRange.x.min;
+        }
+        if(AddMarginY){
+            let yMargin = this.dataRange.y.range*0.1;            
             this.dataRange.y.max += yMargin;
             this.dataRange.y.min -= yMargin;
-            this.dataRange.x.range = this.dataRange.x.max-this.dataRange.x.min;
             this.dataRange.y.range = this.dataRange.y.max-this.dataRange.y.min;
         }
+
     }
 
     setXRange(min, max){
@@ -61,6 +65,14 @@ class Graph{
 
     showAxes(){
         this.axes.show(this.graphStart, this.graphDim);
+    }
+
+    scaleByX(input){
+        return this.map(input, this.dataRange.x.min, this.dataRange.x.max, this.graphStart.x, this.graphDim.x+this.graphStart.x)
+    }
+
+    scaleByY(input){
+        return this.map(input, this.dataRange.y.min, this.dataRange.y.max, this.graphStart.y, this.graphDim.y+this.graphStart.y);
     }
 
     mapOntoX(input){

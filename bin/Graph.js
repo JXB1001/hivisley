@@ -12,6 +12,12 @@ class Graph{
         this.dataRange = {x:{min:Infinity,max:-Infinity,range:0},y:{min:Infinity,max:-Infinity,range:0}};
     }
 
+    setColourScheme(scheme){
+        this.scheme = scheme;
+        this.backColour = scheme.background;
+        this.colour = scheme.axes;
+    }
+
     addData(data){
 
     }

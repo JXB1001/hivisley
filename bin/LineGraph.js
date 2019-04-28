@@ -40,8 +40,14 @@ class LineGraph extends Graph{
         strokeWeight(this.weight)
         noFill();
         let refGraph = this;
+        let count = 0;
+
         this.lines.forEach(function(l){
-            l.show(refGraph)
+            if(refGraph.scheme){
+                stroke(refGraph.scheme[count]);
+                count = (count + 1)%refGraph.scheme["numberOfColours"];
+            }
+            l.show(refGraph)     
         });
         super.showAxes();
     }

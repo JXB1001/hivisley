@@ -13,15 +13,43 @@ class DataLine{
         switch(graph.style){
             case "STRAIGHT":this.showStraight(graph);
                 break;
-            case "CUREVED":this.showCurved(graph);
+            case "CURVED":this.showCurved(graph);
                 break;
         }
+    }
+
+    showFilledStraight(graph){
+        beginShape();
+        let pos = {x:undefined,y:undefined};
+        let dps = this.dataPoints;
+
+        if(graph.isInRange(dps[0])){
+            pos = {x:graph.mapOntoX(dps[0].x), y:graph.mapOntoY(0)}
+            vertex(pos.x, pos.y);
+        }
+        for(var i = 0; i < dps.length; i++){
+            if(graph.isInRange(dps[i])){
+                pos = {x:graph.mapOntoX(dps[i].x), y:graph.mapOntoY(dps[i].y)}
+                vertex(pos.x, pos.y);
+            }
+            else{
+                console.log("Datapoint Out of Scope");
+            }
+        }
+        if(graph.isInRange(dps[i])){
+            pos = {x:graph.mapOntoX(dps[i].x), y:graph.mapOntoY(0)}
+            vertex(pos.x, pos.y);
+        }
+        if(graph.isInRange(dps[0])){
+            pos = {x:graph.mapOntoX(dps[0].x), y:graph.mapOntoY(0)}
+            vertex(pos.x, pos.y);
+        }
+        endShape();
     }
 
     showStraight(graph){
         beginShape();
         let pos = {x:undefined,y:undefined};
-        let curve = {a:0,b:0};
         let dps = this.dataPoints;
 
         for(var i = 0; i < dps.length; i++){

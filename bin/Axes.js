@@ -83,4 +83,10 @@ class Axes{
             this.xIncrement /= 2;
         }
     }
+
+    addLabels(labels, width, spacing){
+        this.labels = labels;
+        this.lwidth = width;
+        this.lspacing = spacing;
+    }
 }

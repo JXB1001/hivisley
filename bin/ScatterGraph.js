@@ -13,7 +13,7 @@ class ScatterGraph extends Graph{
 
         for(var i = 0; i < data.x.length; i++){
             this.addDataPoint(data.x[i], data.y[i]);
-            this.dataPoints.push(new DataPoint(data.x[i], data.y[i], this));
+            this.dataPoints.push(new DataPoint(data.x[i], data.y[i]));
         }
         this.axes.setDataRange(this.dataRange);
         this.initialiseRange(false)
